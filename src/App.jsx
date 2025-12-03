@@ -281,6 +281,17 @@ export default function UXGradeCompass() {
         
         {/* Grade Selector */}
         <section className="mb-12">
+          <p className="mb-6 text-sm text-slate-600">
+            Based on the <a 
+              href="https://docs.google.com/document/d/17IPmWhP4uvGZGC_zJ-oW4-z1CD6jxfChwQ4CUlcro_g/edit?tab=t.ty7g4ek51eun" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800 underline"
+            >
+              UX Career Framework
+            </a>, this tool is Intended to help alleviate ambiguity between designer roles, especially when collaborating together.
+          </p>
+          
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-lg font-semibold text-slate-800">Select Levels</h2>
             <span className="text-xs font-medium px-2 py-1 rounded-full bg-slate-100 text-slate-500">
