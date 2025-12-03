@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Check, Info, Users, FileText, Target, Award, Layers, ArrowRight } from 'lucide-react';
+import { Check, Info, Users, FileText, Target, Award, Layers, ArrowRight, LogOut } from 'lucide-react';
+import { useAuth } from './AuthContext';
 
 // Data Model based on the provided PDF content
 const GRADE_DATA = {
@@ -238,6 +239,7 @@ const ComparisonCard = ({ selectedGrades }) => {
 };
 
 export default function UXGradeCompass() {
+  const { user, logout } = useAuth();
   const [selectedIds, setSelectedIds] = useState(['G6', 'G7']);
 
   const toggleSelection = (id) => {
@@ -271,8 +273,20 @@ export default function UXGradeCompass() {
               <p className="text-xs text-slate-500 font-medium">Career Clarity Tool</p>
             </div>
           </div>
-          <div className="text-xs text-slate-400 hidden sm:block">
-            v1.0
+          <div className="flex items-center gap-4">
+            {user && (
+              <div className="text-xs text-slate-500 hidden sm:block">
+                {user.email}
+              </div>
+            )}
+            <button
+              onClick={logout}
+              className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition-colors"
+              title="Sign out"
+            >
+              <LogOut className="h-4 w-4" />
+              <span className="hidden sm:inline">Sign Out</span>
+            </button>
           </div>
         </div>
       </header>
