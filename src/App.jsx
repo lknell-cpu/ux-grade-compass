@@ -378,7 +378,14 @@ export default function UXGradeCompass() {
         {/* Footer Legend / Info */}
         <div className="mt-12 border-t border-slate-200 pt-8 pb-8 text-center">
           <p className="text-slate-400 text-sm">
-            Based on the Internal UX IC Collaboration Framework. Intended as a tool to help alleviate ambiguity between designer roles, especially when collaborating together.
+            This app was created by <a 
+              href="https://salesforce.enterprise.slack.com/team/WJVD6RF96" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:text-blue-700 underline"
+            >
+              Laurel Knell
+            </a>, who is always open to ideas and suggestions!
           </p>
         </div>
 
