@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { Check, Info, Users, FileText, Target, Award, Layers, ArrowRight } from 'lucide-react';
+import { Check, Info, Users, FileText, Target, Award, Layers, ArrowRight, LogOut } from 'lucide-react';
+import { useAuth } from './hooks/useAuth';
+import { signOut } from 'firebase/auth';
+import { auth } from './firebase';
+import Login from './components/Login';
 
 // Data Model based on the provided PDF content
 const GRADE_DATA = {
@@ -239,6 +243,32 @@ const ComparisonCard = ({ selectedGrades }) => {
 
 export default function UXGradeCompass() {
   const [selectedIds, setSelectedIds] = useState(['G6', 'G7']);
+  const { user, loading, isAuthorized } = useAuth();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  // Show loading state while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+          <p className="text-slate-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login page if user is not authenticated or not authorized
+  if (!user || !isAuthorized) {
+    return <Login />;
+  }
 
   const toggleSelection = (id) => {
     if (selectedIds.includes(id)) {
@@ -271,8 +301,18 @@ export default function UXGradeCompass() {
               <p className="text-xs text-slate-500 font-medium">Career Clarity Tool</p>
             </div>
           </div>
-          <div className="text-xs text-slate-400 hidden sm:block">
-            v1.0
+          <div className="flex items-center gap-4">
+            <div className="text-xs text-slate-400 hidden sm:block">
+              v1.0
+            </div>
+            <button
+              onClick={handleSignOut}
+              className="flex items-center gap-2 px-3 py-1.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+              title="Sign out"
+            >
+              <span className="hidden sm:inline">{user?.email}</span>
+              <LogOut className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </header>
