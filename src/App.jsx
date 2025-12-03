@@ -289,7 +289,7 @@ export default function UXGradeCompass() {
               className="text-blue-600 hover:text-blue-800 underline"
             >
               UX Career Framework
-            </a>, this tool is Intended to help alleviate ambiguity between designer roles, especially when collaborating together.
+            </a>, this tool is intended to help alleviate ambiguity between designer roles, especially when collaborating together.
           </p>
           
           <div className="mb-4 flex items-center justify-between">
