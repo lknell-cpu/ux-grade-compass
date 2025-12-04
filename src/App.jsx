@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Check, Info, Users, FileText, Target, Award, Layers, ArrowRight } from 'lucide-react';
+import { Check, Info, Users, FileText, Target, Award, Layers } from 'lucide-react';
+import UserMenu from './components/auth/UserMenu';
 
 // Data Model based on the provided PDF content
 const GRADE_DATA = {
@@ -271,9 +272,7 @@ export default function UXGradeCompass() {
               <p className="text-xs text-slate-500 font-medium">Career Clarity Tool</p>
             </div>
           </div>
-          <div className="text-xs text-slate-400 hidden sm:block">
-            v1.0
-          </div>
+          <UserMenu />
         </div>
       </header>
 
