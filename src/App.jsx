@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Check, Info, Users, FileText, Target, Award, Layers, Compass } from 'lucide-react';
 import UserMenu from './components/auth/UserMenu';
+import { useAuth } from './contexts/AuthContext';
+import { trackPageVisit, trackGradeComparison } from './utils/analytics';
 
 // Data Model based on the provided PDF content
 const GRADE_DATA = {
@@ -239,7 +241,25 @@ const ComparisonCard = ({ selectedGrades }) => {
 };
 
 export default function UXGradeCompass() {
+  const { currentUser } = useAuth();
   const [selectedIds, setSelectedIds] = useState(['G6', 'G7']);
+
+  // Track page visit on mount
+  useEffect(() => {
+    if (currentUser) {
+      trackPageVisit(currentUser.uid, currentUser.email);
+    }
+  }, [currentUser]);
+
+  // Track grade comparison whenever selection changes (with a delay to avoid tracking every click)
+  useEffect(() => {
+    if (currentUser && selectedIds.length > 0) {
+      const timer = setTimeout(() => {
+        trackGradeComparison(currentUser.uid, currentUser.email, selectedIds);
+      }, 1000); // Wait 1 second after last change
+      return () => clearTimeout(timer);
+    }
+  }, [selectedIds, currentUser]);
 
   const toggleSelection = (id) => {
     if (selectedIds.includes(id)) {

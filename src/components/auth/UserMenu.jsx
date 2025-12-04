@@ -1,10 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { LogOut, ChevronDown } from 'lucide-react';
+import { LogOut, ChevronDown, BarChart3 } from 'lucide-react';
+
+const ADMIN_EMAIL = 'lknell@salesforce.com';
 
 export default function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
   const menuRef = useRef(null);
 
   // Close dropdown when clicking outside
@@ -79,6 +83,20 @@ export default function UserMenu() {
               {currentUser.email}
             </p>
           </div>
+
+          {/* Admin Analytics Link */}
+          {currentUser.email === ADMIN_EMAIL && (
+            <button
+              onClick={() => {
+                navigate('/analytics');
+                setIsOpen(false);
+              }}
+              className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors"
+            >
+              <BarChart3 className="w-4 h-4" />
+              Analytics
+            </button>
+          )}
 
           {/* Sign Out Button */}
           <button

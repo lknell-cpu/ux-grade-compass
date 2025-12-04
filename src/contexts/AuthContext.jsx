@@ -10,6 +10,7 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 import { auth } from '../firebase/config';
+import { trackSignIn } from '../utils/analytics';
 
 const AuthContext = createContext({});
 
@@ -45,6 +46,9 @@ export const AuthProvider = ({ children }) => {
       await signOut(auth);
       throw new Error('Access restricted to @salesforce.com email addresses only.');
     }
+    
+    // Track successful sign-in
+    trackSignIn(result.user.uid, result.user.email);
     
     return result;
   };

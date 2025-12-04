@@ -59,7 +59,49 @@ const firebaseConfig = {
 
 ---
 
-## Step 4: Configure Environment Variables
+## Step 4: Enable Firestore Database
+
+1. In the Firebase Console sidebar, click **"Firestore Database"**
+2. Click **"Create database"**
+3. Select **"Start in production mode"** (we'll add rules next)
+4. Choose a location for your database (select the closest to your users)
+5. Click **"Enable"**
+
+### Set Firestore Security Rules
+
+1. Click on the **"Rules"** tab
+2. Replace the default rules with the following:
+
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow authenticated users to read/write their own analytics data
+    match /analytics_signins/{document=**} {
+      allow write: if request.auth != null;
+      allow read: if request.auth != null && request.auth.token.email == 'lknell@salesforce.com';
+    }
+    
+    match /analytics_visits/{document=**} {
+      allow write: if request.auth != null;
+      allow read: if request.auth != null && request.auth.token.email == 'lknell@salesforce.com';
+    }
+    
+    match /analytics_comparisons/{document=**} {
+      allow write: if request.auth != null;
+      allow read: if request.auth != null && request.auth.token.email == 'lknell@salesforce.com';
+    }
+  }
+}
+```
+
+3. Click **"Publish"**
+
+**Note:** These rules allow all authenticated users to write analytics data, but only the admin (lknell@salesforce.com) can read the analytics.
+
+---
+
+## Step 5: Configure Environment Variables
 
 ### Option A: Using vite.config.js (Current Implementation)
 
@@ -95,7 +137,7 @@ VITE_FIREBASE_APP_ID=your_app_id
 
 ---
 
-## Step 5: Configure Authorized Domains
+## Step 6: Configure Authorized Domains
 
 1. In Firebase Console → **Authentication** → **Settings** tab
 2. Scroll to **"Authorized domains"**
@@ -106,7 +148,7 @@ VITE_FIREBASE_APP_ID=your_app_id
 
 ---
 
-## Step 6: Test Authentication
+## Step 7: Test Authentication and Analytics
 
 1. Start the development server:
 ```bash
@@ -135,6 +177,9 @@ npm run dev
 - [ ] Trying to access `/` while logged out redirects to login
 - [ ] Authentication persists on page refresh
 - [ ] Clicking outside user menu closes the dropdown
+- [ ] Admin user (lknell@salesforce.com) can see Analytics link in user menu
+- [ ] Analytics page loads and displays data
+- [ ] Non-admin users cannot access /analytics route
 
 ---
 

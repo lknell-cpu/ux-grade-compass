@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from './contexts/AuthContext';
 import Login from './components/auth/Login';
 import PrivateRoute from './components/auth/PrivateRoute';
+import AdminRoute from './components/auth/AdminRoute';
 import UXGradeCompass from './App';
+import Analytics from './pages/Analytics';
 
 export default function AppRouter() {
   return (
@@ -18,6 +20,14 @@ export default function AppRouter() {
               <PrivateRoute>
                 <UXGradeCompass />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <AdminRoute>
+                <Analytics />
+              </AdminRoute>
             }
           />
           <Route path="*" element={<Navigate to="/" />} />
