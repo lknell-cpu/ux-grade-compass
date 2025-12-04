@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, Info, Users, FileText, Target, Award, Layers } from 'lucide-react';
+import { Check, Info, Users, FileText, Target, Award, Layers, Compass } from 'lucide-react';
 import UserMenu from './components/auth/UserMenu';
 
 // Data Model based on the provided PDF content
@@ -264,8 +264,8 @@ export default function UXGradeCompass() {
       <header className="bg-white shadow-sm sticky top-0 z-40">
         <div className="mx-auto max-w-5xl px-4 py-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-tr from-blue-600 to-purple-600 p-2 rounded-lg">
-              <Award className="h-6 w-6 text-white" />
+            <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-2 rounded-xl shadow-md">
+              <Compass className="h-6 w-6 text-white" />
             </div>
             <div>
               <h1 className="text-xl font-bold text-slate-900 tracking-tight">UX Grade Compass</h1>
